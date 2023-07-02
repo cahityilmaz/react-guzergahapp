@@ -1,25 +1,75 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+//import "./App.css";
 
 function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+	const data = {
+		guzergahAdi: "",
+		duraklar: [],
+	};
+
+	const Durak = () => {
+		return (
+			<div>
+				<input
+					type="text"
+					name="durak"
+					value={guzergah.duraklar.durak}
+					placeholder="Durak Adı"
+					onChange={guzergahOnChange}
+				/>
+				<input
+					type="text"
+					name="enlem"
+					value={guzergah.duraklar.enlem}
+					placeholder="Enlem"
+					onChange={guzergahOnChange}
+				/>
+				<input
+					type="text"
+					name="boylam"
+					value={guzergah.duraklar.boylam}
+					placeholder="Boylam"
+					onChange={guzergahOnChange}
+				/>
+			</div>
+		);
+	};
+
+	const [guzergah, setGuzergah] = useState(data);
+
+	const durakEkleOnClicked = (e) => {
+		setGuzergah((guzergah) => ({
+			...guzergah,
+			duraklar: [
+				...guzergah.duraklar,
+				{
+					durak: "",
+					enlem: "",
+					boylam: "",
+				},
+			],
+		}));
+	};
+
+	const guzergahOnChange = (e) => {
+		setGuzergah((guzergah) => ({
+			...guzergah,
+			[e.target.name]: e.target.value,
+		}));
+	};
+
+	return (
+		<div>
+			<input type="text" name="guzergahAdi" value={guzergah.guzergahAdi} placeholder="Güzergah" onChange={guzergahOnChange} />
+			<button onClick={durakEkleOnClicked}>Yeni Durak Ekle</button>
+			<hr />
+			{guzergah.duraklar.map((durak, index) => {
+				return <Durak key={index} />;
+			})}
+			<hr />
+			<button disabled={!guzergah.guzergahAdi}>Kaydet</button>
+		</div>
+	);
 }
 
 export default App;
